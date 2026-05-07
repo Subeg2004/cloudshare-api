@@ -1,0 +1,12 @@
+node_modules/
+.env
+*.log
+.vscode/
+local.settings.json
+.DS_Store
+# Test artifacts
+*.test.txt
+cloudtest.txt
+logictest*.txt
+test.txt
+server.old.js
