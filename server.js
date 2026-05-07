@@ -1,10 +1,3 @@
-// ===================================================================
-// CloudShare API - Backend Server
-// Author: Subeg Poudal (B00970131)
-// Module: COM682 Cloud Native Development - CW2
-// ===================================================================
-
-// Load environment variables from .env file (must be first)
 require('dotenv').config();
 
 // Application Insights - must be set up before other requires for full instrumentation
@@ -35,7 +28,7 @@ const cors = require('cors');
 
 const app = express();
 
-// CORS - must be first, before any route or other middleware
+// CORS 
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -276,7 +269,7 @@ app.post('/api/upload', requireAuth, upload.single('file'), async (req, res) => 
   }
 });
 
-// GET /api/media - List current user's files (optional ?category=photos|drive|notes)
+// GET /api/media - List current user's files 
 app.get('/api/media', requireAuth, async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -299,7 +292,7 @@ app.get('/api/media', requireAuth, async (req, res) => {
   }
 });
 
-// GET /api/stats - User storage stats (used by the dashboard)
+// GET /api/stats - User storage stats 
 app.get('/api/stats', requireAuth, async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -352,7 +345,7 @@ app.put('/api/media/:id', requireAuth, async (req, res) => {
   }
 });
 
-// DELETE /api/media/:id - Delete a file (removes from blob + cosmos)
+// DELETE /api/media/:id - Delete a file 
 app.delete('/api/media/:id', requireAuth, async (req, res) => {
   try {
     const userId = req.user.userId;
