@@ -31,18 +31,21 @@ const { BlobServiceClient } = require('@azure/storage-blob');
 const { CosmosClient } = require('@azure/cosmos');
 const sql = require('mssql');
 
+const cors = require('cors');
+
 const app = express();
+
+// CORS - must be first, before any route or other middleware
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200
+}));
+app.options('*', cors());
+
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-
-// CORS - allow frontend to call API from a different origin
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') return res.sendStatus(200);
-  next();
-});
 
 // Multer for file uploads (in-memory, max 50MB)
 const upload = multer({
